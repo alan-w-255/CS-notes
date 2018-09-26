@@ -54,4 +54,4 @@ goroutine 不是协程, 官方的说法是: 'A goroutine is a lightweight thread
 
 ## 参考资料
 
-- [Coroutine, 维基百科](!https://en.wikipedia.org/wiki/Coroutine)
+- [Coroutine, 维基百科](https://en.wikipedia.org/wiki/Coroutine)
