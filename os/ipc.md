@@ -68,9 +68,12 @@ int mkfifo(const char *pathname, mode_t mode);
 
 ```c
 #include <sys/shm.h>
+// 创建或获取一个共享内存: 成功返回内存ID, 失败返回 -1
 int shmget(key_t key, size_t size, int flag);
+// 连接共享内存到当前进程的地址空间: 成功返回指向共享内存的指针, 失败返回 -1
 void *shmat(int shm_id, const void *addr, int flag);
 int shmdt(void *addr);
+int shmctl(int shm_id, int cmd, struct shmid_ds *buf);
 ```
 
 ## 套接字
