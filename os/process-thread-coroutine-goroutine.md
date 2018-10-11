@@ -15,7 +15,7 @@
 线程是 CPU 调度和分派的基本单位(注意进程是 **资源分配和调度** 的基本单位).
 
 | | 进程 | 线程 |
----|-----|-----|---
+|---|-----|-----|
 |进程/线程空间内容 | 地址空间, 全局变量, 文件描述符, 子进程, 即将发生的报警, 信号和信号处理程序, 账户信号, 同步/互斥信号量 | 程序计数器 (pc), 寄存器, 堆栈, 状态 | 
 | 创建速度 | 慢 | 比进程快 10 ~ 100 倍 |
 | 创建所需资源 | 多 | 少 |
@@ -48,7 +48,7 @@
 
 ## :fish: goroutine
 
-goroutine 不是协程, 官方的说法是: 'A goroutine is a lightweight thread managed by the Go runtime'. 是 Go 运行时管理的轻量级的线程. Go 实现了 goroutine 的调度器, goroutine 的上下文只有 2k, 而线程的上下文需要几兆的空间. goroutine 的上下文切换开销是很低的.
+goroutine 不是协程, 官方的说法是: 'A goroutine is a lightweight thread managed by the Go runtime'. **是 Go 运行时管理的轻量级的线程**. Go 实现了 goroutine 的调度器, goroutine 的上下文只有 2k, 而线程的上下文需要几兆的空间. goroutine 的上下文切换开销是很低的.
 
 所以 go 语言级别支持高并发.
 
