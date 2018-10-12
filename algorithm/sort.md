@@ -1,8 +1,21 @@
-# 排序算法
+# :whale: 排序算法
 
-## 冒泡排序
+<!-- TOC -->
 
-> 时间复杂度 O(n^2), 空间复杂度 O(1)
+- [:whale: 排序算法](#whale-排序算法)
+  - [:fish: 冒泡排序](#fish-冒泡排序)
+  - [:fish: 堆排序](#fish-堆排序)
+    - [:lollipop: 最大堆调整 (Max Heapify)](#lollipop-最大堆调整-max-heapify)
+    - [:lollipop: 建堆 (Build Heap)](#lollipop-建堆-build-heap)
+    - [:lollipop: 堆排序操作 (heap sort)](#lollipop-堆排序操作-heap-sort)
+  - [:fish: 插入排序](#fish-插入排序)
+  - [:fish: 快速排序](#fish-快速排序)
+
+<!-- /TOC -->
+
+## :fish: 冒泡排序
+
+> 稳定, 时间复杂度 O(n^2), 空间复杂度 O(1)
 
 <details> <summary> c 语言实现 </summary>
 <p>
@@ -25,7 +38,9 @@ void bubbleSort(int len, int* a) {
 </p>
 </details>
 
-## 堆排序
+## :fish: 堆排序
+
+> 不稳定, 时间复杂度 O(n) ~ O(n*log(n)), 空间复杂度 O(1)
 
 堆通常用一维数组表示. 在数据起始位置为 0 的情形中:
 
@@ -41,64 +56,57 @@ void bubbleSort(int len, int* a) {
 
 ### :lollipop: 最大堆调整 (Max Heapify)
 
-```c++
-void max_heapify(int arr[], int start, int end) {
-  // 假设左右子树已经是最大堆, parent 有可能小于左右子树
-  int parent = start;
-  int mChild = parent * 2 + 1;
-  while (mChild <= end) {
-    if (mChild + 1 <= end && arr[mChild] < arr[mChild + 1]) mChild ++; // 如果有右孩子, 而且右孩子大于左孩子, 则右孩子应为新的 parent
-    if (arr[parent] > arr[mChild]) return; parent 大于
-    else {
-      // parent 和左右孩子中最大的交换, 最大孩子成为新的 parent 进行下次的迭代.
-      swap(&arr[parent], &arr[mChild]);
-      parent = mChild;
-      mChild = parent * 2 + 1;
-    }
-  }
-}
-```
+:boom: 伪代码实现
 
-<details><summary> c++ 实现 </summary>
-<p>
+    max_heapify(A, i):
+      l = left(i) // 左孩子下标
+      r = right(i) // 右孩子下标
+      if l <= A.heap_size and A[l] > A[i]
+        largest = l
+      else largest = i
+      if r <= A.heap_size and A[r] > A[largest]
+        largest = r
+      if largest != i
+        exchange A[i] with A[largest]
+        max_heapify(A, largest)
 
-```c++
-#include <iostream>
-#include <algorithm>
-using namespace std;
+### :lollipop: 建堆 (Build Heap)
 
-void max_heapify(int arr[], int start, int end) {
-  // 假设左右子树已经是最大堆, parent 有可能小于左右子树
-  int parent = start;
-  int mChild = parent * 2 + 1;
-  while (mChild <= end) {
-    if (mChild + 1 <= end && arr[mChild] < arr[mChild + 1]) mChild ++; // 如果有右孩子, 而且右孩子大于左孩子, 则右孩子应为新的 parent
-    if (arr[parent] > arr[mChild]) return; parent 大于
-    else {
-      // parent 和左右孩子中最大的交换, 最大孩子成为新的 parent 进行下次的迭代.
-      swap(&arr[parent], &arr[mChild]);
-      parent = mChild;
-      mChild = parent * 2 + 1;
-    }
-  }
-}
+:boom: 伪代码实现
 
-void heap_sort(int arr[], int len) {
-  for(jnt j = len / 2 -1; j >= 0; j--) max_heapjfy(arr, j, len - 1);
-  for (int i = len - 1; i > 0; i--) {
-    swap(arr[0], arr[i]);
-    max_heapify(arr, 0, i - 1);
-  }
-}
+    build_max_heap(A):
+      A.heap_size = A.length
+      for i = floor(A.length / 2 - 1) downto 0:
+        max_heapify(A, i)
 
-int main() {
-  int arr[] = {3, 5, 3, 0, 8, 6, 1, 5, 8, 6, 2, 4, 9, 4, 7, 0, 1, 8, 9, 7, 3, 1, 2, 5, 9, 7, 4, 0, 2, 6}
-  int len = (int) sizeof(arr) / sizeof(*arr);
-  heap_sort(arr, len);
-  for (int i = 0; i < len; i++) cout << arr[i] << ' ';
-  cout endl;
-  return 0;
-}
-```
+:herb: n = A.length, 下标从零开始的话, 子数组 A(floor(n/2) .. n) 都是树的叶节点, 每个叶节点都可以看成只包含一个元素的堆, `build_max_heap` 对其它节点都调用一次 `max_heapify` , 这是自底向上的建堆.
 
-</p></details>
+### :lollipop: 堆排序操作 (heap sort)
+
+:boom: 伪代码实现
+
+    heapsort(A):
+      for i = A.length downto 1
+        exchange A[0] with A[i]
+        A.heap_size = A.heap_size - 1
+        max_heapify(A, 0)
+
+:herb: 不断地把堆定元素放在数组后面, 把数组后面地替换的元素放在堆顶, 再调整堆. 这样操作直到 heap_size = 0;
+
+## :fish: 插入排序
+
+> 不稳定, 时间复杂度 O(n) ~ O(n<sup>2</sup>), 空间复杂度 O(1)
+
+:boom: 伪代码实现
+
+    insert_sort(A):
+      for j = 2 to A.length:
+        key = A[j]
+        i = j - 1
+        while i > 0 and A[i] > key:
+          // 将 j 前面比 key 大的向后面移动一位
+          A[i+1] = A[i]
+          i = i - 1
+        A[i+1] = key // 将 key 插入到比 key 小的元素后面
+
+## :fish: 快速排序
