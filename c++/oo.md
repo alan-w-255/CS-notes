@@ -19,6 +19,8 @@
 
 ## :fish: 多态
 
+c++ 中实现多态的方法有: 虚函数, 抽象类, 覆盖, 模板 (重载与多态无关)
+
 虚函数是实现动态多态的方法.
 
 ### :herb: 虚函数
@@ -54,3 +56,54 @@ class className {
 派生类可以覆盖基类的虚函数, 即函数原型相同, 实现不同. 实现了覆盖的派生类调用的是派生类的实现, 而不是基类的实现.
 
 ## :fish: 模板
+
+> 模板以变量的数据类型作为参数, 通过改变数据类型可以生成不同的函数和类. 通过改变函数模板的数据类型参数生成的函数叫做模板函数.
+
+模板的数据类型需要在编译期间确定, 属于静态多态.
+
+### :herb: 函数模板
+
+:leaves: 声明:
+
+```c++
+template <typename typeA, typename typeB>
+typeA func(typeB a, typeB b) {
+  // do someting here.
+}
+```
+
+:leaves: 使用:
+
+```c++
+func(doubleA, doubleB); // 模板函数可以隐式确定类型.
+```
+
+### :herb: 类模板
+
+:leaves: 声明:
+
+```c++
+template <typename typeA, typename typeB>
+class A {
+  public:
+    typeA funcA(typeB);
+};
+
+template <typename typeA, typename typeB>
+typeA A<typeA, typeB>::funcA(typeB a) {
+  // do someting here
+}
+```
+
+:leaves: 使用
+
+```c++
+// 派生
+class B:: public A<int, double> {
+  // do someting here
+}
+
+// 实例化
+A<int, double> *a = new A<int, double>;
+A<int, double> b;
+```
